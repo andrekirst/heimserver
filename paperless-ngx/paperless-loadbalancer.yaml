@@ -19,5 +19,5 @@ spec:
       port: 139
       targetPort: 139
     - name: sftp
-      port: 22
-      targetPort: 22
+      port: 2222
+      targetPort: 2222

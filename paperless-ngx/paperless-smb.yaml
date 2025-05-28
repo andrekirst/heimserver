@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: samba
-          image: dperson/samba
+          image: dperson/samba:latest
           args:
             - "-s"
             - "consume;/mnt/consume;yes;no;yes;all;none"

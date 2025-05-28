@@ -15,11 +15,20 @@ spec:
     spec:
       containers:
         - name: sftp
-          image: atmoz/sftp
-          args:
-            - "readonly:password:1001"
+          image: ghcr.io/linuxserver/openssh-server
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: PASSWORD_ACCESS
+              value: "true"
+            - name: USER_PASSWORD
+              value: "password"
+            - name: USER_NAME
+              value: "readonly"
           ports:
-            - containerPort: 22
+            - containerPort: 2222
           volumeMounts:
             - name: consume
               mountPath: /home/readonly/consume:ro
