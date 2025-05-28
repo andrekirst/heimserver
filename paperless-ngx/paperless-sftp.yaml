@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paperless-sftp
+  namespace: paperless
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: paperless-sftp
+  template:
+    metadata:
+      labels:
+        app: paperless-sftp
+    spec:
+      containers:
+        - name: sftp
+          image: atmoz/sftp
+          args:
+            - "readonly:password:1001"
+          ports:
+            - containerPort: 22
+          volumeMounts:
+            - name: consume
+              mountPath: /home/readonly/consume:ro
+            - name: media
+              mountPath: /home/readonly/media:ro
+            - name: data
+              mountPath: /home/readonly/data:ro
+      volumes:
+        - name: consume
+          persistentVolumeClaim:
+            claimName: paperless-consume-pvc
+        - name: media
+          persistentVolumeClaim:
+            claimName: paperless-media-pvc
+        - name: data
+          persistentVolumeClaim:
+            claimName: paperless-data-pvc

@@ -18,3 +18,6 @@ spec:
     - name: netbios
       port: 139
       targetPort: 139
+    - name: sftp
+      port: 22
+      targetPort: 22
