@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paperless-smb
+  namespace: paperless
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: paperless-smb
+  template:
+    metadata:
+      labels:
+        app: paperless-smb
+    spec:
+      containers:
+        - name: samba
+          image: dperson/samba
+          args:
+            - "-s"
+            - "consume;/mnt/consume;yes;no;yes;all;none"
+            - "-s"
+            - "media;/mnt/media;yes;no;yes;all;none"
+            - "-s"
+            - "data;/mnt/data;yes;no;yes;all;none"
+          ports:
+            - containerPort: 445
+            - containerPort: 139
+          securityContext:
+            capabilities:
+              add: ["NET_ADMIN"]
+          volumeMounts:
+            - name: consume
+              mountPath: /mnt/consume
+            - name: media
+              mountPath: /mnt/media
+            - name: data
+              mountPath: /mnt/data
+      volumes:
+        - name: consume
+          persistentVolumeClaim:
+            claimName: paperless-consume-pvc
+        - name: media
+          persistentVolumeClaim:
+            claimName: paperless-media-pvc
+        - name: data
+          persistentVolumeClaim:
+            claimName: paperless-data-pvc
