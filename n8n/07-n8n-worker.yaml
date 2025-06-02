@@ -46,6 +46,11 @@ spec:
                 secretKeyRef:
                   name: n8n-secrets
                   key: POSTGRES_PASSWORD
+            - name: N8N_ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: n8n-encryption-secret
+                  key: N8N_ENCRYPTION_KEY
             # Optional: Falls weitere spezifische Worker-Konfigurationen benötigt werden:
             - name: N8N_WORKER_ENABLED
               value: "true"

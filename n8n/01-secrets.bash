@@ -5,3 +5,4 @@ microk8s kubectl create secret generic n8n-secrets \
   --from-literal=POSTGRES_PASSWORD=n8npassword \
   --from-literal=N8N_BASIC_AUTH_USER=deinuser \
   --from-literal=N8N_BASIC_AUTH_PASSWORD=deinpasswort \
+  --from-literal=N8N_ENCRYPTION_KEY=$(openssl rand -base64 32)
