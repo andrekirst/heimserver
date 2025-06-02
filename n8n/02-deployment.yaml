@@ -32,5 +32,5 @@ spec:
                   name: n8n-secrets
                   key: N8N_BASIC_AUTH_PASSWORD
             # Deaktivieren des secure cookie flags (nur für Test-/Entwicklungsumgebungen empfohlen)
-            - name: N8N_SECURE_COOKIES
+            - name: N8N_SECURE_COOKIE
               value: "false"
