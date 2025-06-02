@@ -6,7 +6,8 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    app: n8n-main
+    app: n8n
   ports:
-    - port: 80
+    - protocol: TCP
+      port: 80
       targetPort: 5678
