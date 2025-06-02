@@ -1,10 +1,9 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: DaemonSet
 metadata:
   name: n8n-worker
   namespace: n8n
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: n8n-worker
