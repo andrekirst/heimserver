@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: n8n-runner
+  namespace: n8n
+  labels:
+    app: n8n-runner
+spec:
+  selector:
+    matchLabels:
+      app: n8n-runner
+  template:
+    metadata:
+      labels:
+        app: n8n-runner
+    spec:
+      # Optional: tolerations, falls einige Nodes spezielle Taints haben
+      containers:
+        - name: n8n-runner
+          image: n8nio/n8n:latest
+          # Starte den Container im Worker-Modus statt mit dem UI/Server:
+          command: ["n8n", "worker"]
+          env:
+            # Setzt den Distributed Mode für Workflow-Ausführungen
+            - name: EXECUTIONS_MODE
+              value: "queue"
+            # Datenbankkonfiguration (wie auch im Main-Deployment)
+            - name: DB_TYPE
+              value: "postgresdb"
+            - name: DB_POSTGRESDB_HOST
+              value: "postgres"
+            - name: DB_POSTGRESDB_PORT
+              value: "5432"
+            - name: DB_POSTGRESDB_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: n8n-secrets
+                  key: POSTGRES_DB
+            - name: DB_POSTGRESDB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: n8n-secrets
+                  key: POSTGRES_USER
+            - name: DB_POSTGRESDB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: n8n-secrets
+                  key: POSTGRES_PASSWORD
+            # Optional: Falls weitere spezifische Worker-Konfigurationen benötigt werden:
+            - name: N8N_WORKER_ENABLED
+              value: "true"
