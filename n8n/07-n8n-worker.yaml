@@ -49,7 +49,7 @@ spec:
             - name: N8N_ENCRYPTION_KEY
               valueFrom:
                 secretKeyRef:
-                  name: n8n-secret
+                  name: n8n-secrets
                   key: N8N_ENCRYPTION_KEY
             # Optional: Falls weitere spezifische Worker-Konfigurationen benötigt werden:
             - name: N8N_WORKER_ENABLED
