@@ -1,4 +1,4 @@
-microk8s kubectl create secret generic postgres-secrets \
+microk8s kubectl create secret generic n8n-secrets \
   --namespace n8n \
   --from-literal=POSTGRES_DB=n8ndb \
   --from-literal=POSTGRES_USER=n8nuser \
